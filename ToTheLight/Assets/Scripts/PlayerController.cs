@@ -8,16 +8,30 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    
+    /// <summary>
+    /// Link to the plsyer's RigidBody component
+    /// </summary>
     private Rigidbody2D _playerRb;
-    public float jumpforce = 55;
+    /// <summary>
+    /// This force added when player hit space to fly
+    /// </summary>
+    public float flyForce = 55;
+    /// <summary>
+    /// This parameter used to multiply movement by vertical and horizontal axes
+    /// </summary>
     public float moveSpeed = 2;
+    /// <summary>
+    /// Used to change players different control params
+    /// </summary>
     public PlayerCondition playerCondition;
-    public bool setRBValuesByEditor = false;
+
+    
 
     public float transformationTime = 7;
     public float transformationExitTime = 2;
 
-
+    public bool setRBValuesByEditor = false;
     private const float rbMass = 0.5f;
     private const float rbGravityScale = 0.5f;
     private int _leafCount = 0;
@@ -38,7 +52,7 @@ public class PlayerController : MonoBehaviour
         _soundManager = SoundManager.instance;
         _playerRb = GetComponent<Rigidbody2D>();
         _animation = GetComponent<PlayerAnimationController>();
-
+        transform.tag = "Player";
         if (!setRBValuesByEditor)
         {
             SetRbValues();
@@ -90,7 +104,7 @@ public class PlayerController : MonoBehaviour
         if (jump)
         {
             _playerRb.velocity = Vector2.zero;
-            _playerRb.AddForce(Vector2.up * jumpforce);
+            _playerRb.AddForce(Vector2.up * flyForce);
 
             _isMoving = true;
         }

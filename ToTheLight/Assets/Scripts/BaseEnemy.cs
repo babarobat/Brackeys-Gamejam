@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-//[DefaultExecutionOrder(+1)]
 public abstract class BaseEnemy : MonoBehaviour {
     
     public float patrolSpeed;
@@ -13,6 +9,7 @@ public abstract class BaseEnemy : MonoBehaviour {
     protected Transform _player;
 
     protected SoundManager _soundManager;
+    protected GameStateManager _gameStateManager;
 
     protected virtual void Start()
     {
@@ -22,10 +19,10 @@ public abstract class BaseEnemy : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        var playerScript = other.GetComponent<PlayerController>();
-        if (playerScript != null)
+        
+        if (other.tag == "Player" )
         {
-            FindObjectOfType<GameStateManager>().GameOverLoss();
+            _gameStateManager.GameOverLoss();
         }
     }
 
