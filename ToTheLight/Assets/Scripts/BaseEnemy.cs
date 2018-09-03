@@ -15,6 +15,7 @@ public abstract class BaseEnemy : MonoBehaviour {
     {
         _player = FindObjectOfType<PlayerController>().transform;
         _soundManager = SoundManager.instance;
+        _gameStateManager = FindObjectOfType<GameStateManager>();
     }
 
     void OnTriggerEnter2D(Collider2D other)

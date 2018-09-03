@@ -22,12 +22,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public float moveSpeed = 2;
     /// <summary>
-    /// Used to change players different control params
+    /// Used to change players control params
     /// </summary>
     public PlayerCondition playerCondition;
 
     
-
+    /// <summary>
+    /// 
+    /// </summary>
     public float transformationTime = 7;
     public float transformationExitTime = 2;
 
@@ -46,12 +48,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 _localScaleFacingLeft = new Vector3(-1, 1, 1);
 
     public GameObject _youCanFlyNotificationTrigger;
+    public GameStateManager _gameStateManager;
 
     private void Start()
     {
         _soundManager = SoundManager.instance;
         _playerRb = GetComponent<Rigidbody2D>();
         _animation = GetComponent<PlayerAnimationController>();
+        _gameStateManager = FindObjectOfType<GameStateManager>();
         transform.tag = "Player";
         if (!setRBValuesByEditor)
         {
@@ -96,39 +100,40 @@ public class PlayerController : MonoBehaviour
     void ButterflyMove()
     {     
         var horizontal = Input.GetAxisRaw("Horizontal");
-
-        if (horizontal != 0)
-            _isMoving = true;
-
         var jump = Input.GetButtonDown("Jump");
+        if (horizontal != 0)
+        {
+            _isMoving = true;
+            transform.Translate(Vector2.right * horizontal * Time.deltaTime * moveSpeed);
+        }
         if (jump)
         {
             _playerRb.velocity = Vector2.zero;
             _playerRb.AddForce(Vector2.up * flyForce);
-
             _isMoving = true;
         }
-        transform.Translate(Vector2.right * horizontal * Time.deltaTime * moveSpeed);
+        
 
     }
     void CaterpillarMove()
     {
         var horizontal = Input.GetAxisRaw("Horizontal");
         var vertical = Input.GetAxisRaw("Vertical");
-        transform.Translate(Vector2.right * horizontal * Time.deltaTime * moveSpeed);
-        if (_canClimb)
+        Debug.Log(vertical);
+        if (horizontal!=0 )
         {
-            transform.Translate(Vector2.up * vertical * Time.deltaTime * moveSpeed);
-        }
-
-        if (horizontal != 0 || (vertical !=0 && _canClimb))
             _isMoving = true;
+            transform.localScale = new Vector3(horizontal, 1, 1);
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+            transform.Translate(Vector2.right * horizontal * Time.deltaTime * moveSpeed);
 
-        //разворот по горизонтали в зависимости от направления движения
-        if (horizontal < 0)
-            transform.localScale = _localScaleFacingLeft;
-        else if (horizontal > 0)
-            transform.localScale = _localScaleFacingRight;
+        }
+        if (vertical != 0 && _canClimb)
+        {
+            _isMoving = true;
+            transform.localRotation = Quaternion.Euler(0, 0, 90 * vertical);
+            transform.Translate(Vector2.right  * Time.deltaTime * moveSpeed);
+        }
     }
 
     void SetRbValues()
@@ -167,6 +172,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.tag == "Leaf")
         {
             _soundManager.SoundPitch("LeafEat", UnityEngine.Random.Range(0.8f, 1.2f));
@@ -178,6 +184,11 @@ public class PlayerController : MonoBehaviour
         {
             _playerRb.isKinematic = true;
             _canClimb = true;
+        }
+        if (collision.tag == "Bushes")
+        {
+            
+            _gameStateManager.GameOverLoss();
         }
     }
     private void OnTriggerExit2D (Collider2D collision)

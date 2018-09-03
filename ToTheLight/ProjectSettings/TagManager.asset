@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Leaf
   - Climb
+  - Bushes
   layers:
   - Default
   - TransparentFX
