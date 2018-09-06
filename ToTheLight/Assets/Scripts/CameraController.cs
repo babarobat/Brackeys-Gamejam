@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
     public Vector3 offset;
     public float smoothSpeed;
+    public Transform lowerCamPos;
 
     private Transform _player;
 
@@ -23,7 +24,9 @@ public class CameraController : MonoBehaviour {
     }
     private void FollowPlayer()
     {
-        Vector3 desiredPos = new Vector3 (_player.position.x, _player.position.y, _cameraPositionZ) + offset;
+        Vector3 desiredPos = new Vector3 (_player.position.x,
+                                          Mathf.Clamp(_player.position.y,lowerCamPos.position.y, _player.position.y),
+                                          _cameraPositionZ) + offset;
         Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, smoothSpeed * Time.deltaTime);
         transform.position = smoothedPos;
     }

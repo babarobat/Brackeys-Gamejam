@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
     {
         var horizontal = Input.GetAxisRaw("Horizontal");
         var vertical = Input.GetAxisRaw("Vertical");
-        Debug.Log(vertical);
+        
         if (horizontal!=0 )
         {
             _isMoving = true;

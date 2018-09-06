@@ -184,6 +184,7 @@ public class SoundManager : MonoBehaviour {
     }
     public void GameOver()
     {
+        StopAllCoroutines();
         foreach (var item in sounds)
         {
 
