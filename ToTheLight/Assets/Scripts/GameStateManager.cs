@@ -52,6 +52,7 @@ public class GameStateManager : MonoBehaviour {
     private PlayerCondition _savedUnpausedPlayerCondition;
 
     private SoundManager _soundManager;
+    private FadeEffect _fadeEffect;
 
 	// Use this for initialization
 	void Start ()
@@ -62,7 +63,7 @@ public class GameStateManager : MonoBehaviour {
         _camera = FindObjectOfType <CameraController>();
         _screenFilterImage = _screenLighting.transform.GetComponent<Image>();
         _soundManager = SoundManager.instance;
-
+        _fadeEffect = FindObjectOfType<FadeEffect>();
         _inGameOverMenu = false;
     }
 
@@ -138,16 +139,16 @@ public class GameStateManager : MonoBehaviour {
     {
         _soundManager.StartGame();
         Time.timeScale = 1;
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        _fadeEffect.FadeAndLoadScene(SceneManager.GetActiveScene().name, Color.black, _fadeEffect.fadeOutTime);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ReturnToMainMenu()
     {
         _soundManager.StartGame();
         Time.timeScale = 1;
-        
-        SceneManager.LoadScene("TitleScreen");
+        _fadeEffect.FadeAndLoadScene("TitleScreen", Color.black, _fadeEffect.fadeOutTime);
+        //SceneManager.LoadScene("TitleScreen");
     }
 
     public void QuitGame()
@@ -181,4 +182,5 @@ public class GameStateManager : MonoBehaviour {
         _btnExitToTitle.SetActive(true);
         _btnQuitGame.SetActive(true);
     }
+    
 }

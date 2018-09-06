@@ -17,7 +17,8 @@ public class TitleMenu : MonoBehaviour {
     private bool _inCredits;
 
     Vector3 _creditsPanelStartingPosition;
-
+    
+    
     void Update()
     {
         if (_inCredits)
@@ -31,7 +32,9 @@ public class TitleMenu : MonoBehaviour {
 
     public void StartGame()
     {
-        SceneManager.LoadScene("MainGame");
+        var _fadeEffect = FindObjectOfType<FadeEffect>();
+        _fadeEffect.FadeAndLoadScene("MainGame", Color.black, _fadeEffect.fadeOutTime);
+        //SceneManager.LoadScene("MainGame");
     }
 
     public void QuitGame()
