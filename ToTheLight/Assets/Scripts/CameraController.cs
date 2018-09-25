@@ -11,9 +11,19 @@ public class CameraController : MonoBehaviour {
 
     private float _cameraPositionZ;
 
+    
+    Camera _camera;
+    
+    Animator _anim;
+    
+    
 
     private void Start()
     {
+         
+        
+        _anim = GetComponent<Animator>();
+        
         _player = FindObjectOfType<PlayerController>().transform;
         _cameraPositionZ = transform.position.z;
         transform.position = new Vector3(_player.position.x, _player.position.y, _cameraPositionZ) + offset; ;
@@ -21,6 +31,7 @@ public class CameraController : MonoBehaviour {
     private void LateUpdate()
     {
         FollowPlayer();
+        
     }
     private void FollowPlayer()
     {
@@ -29,5 +40,13 @@ public class CameraController : MonoBehaviour {
                                           _cameraPositionZ) + offset;
         Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, smoothSpeed * Time.deltaTime);
         transform.position = smoothedPos;
+    }
+
+
+   
+    
+    public void SwitchCamAnimTrigger(string animName)
+    {
+        _anim.SetTrigger(animName);
     }
 }

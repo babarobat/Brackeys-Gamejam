@@ -19,7 +19,7 @@ public class BadFly : BaseEnemy
     {
         base.Start();
 
-        
+        GetComponentInChildren<CircleCollider2D>().radius = agroRadius;
         _audio = GetComponent<AudioSource>();
         _audio.volume = 0f;
         _audio.Play();

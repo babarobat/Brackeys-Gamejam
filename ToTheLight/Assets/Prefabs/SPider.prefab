@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 61807199046447796}
   - component: {fileID: 114053069312899248}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: CamShakeTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,6 +58,23 @@ GameObject:
   - component: {fileID: 95133530535194492}
   m_Layer: 0
   m_Name: SPider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1977894508181968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4418504325549552}
+  - component: {fileID: 61067575662516702}
+  - component: {fileID: 114932114861364638}
+  m_Layer: 0
+  m_Name: AttackTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,6 +100,19 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1550355879938638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4611949007322142}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4418504325549552
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977894508181968}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.05, y: -4.08, z: -0.15018545}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -96,14 +126,40 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1958681116613716}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.624725, y: 26.099037, z: 0}
+  m_LocalPosition: {x: 6.7614207, y: 1.0082345, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4224212435822174}
+  - {fileID: 4418504325549552}
   - {fileID: 4375785327173030}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61067575662516702
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977894508181968}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.79}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 5.63}
+  m_EdgeRadius: 0
 --- !u!61 &61704398502383826
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -127,7 +183,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.7, y: 0.8}
   m_EdgeRadius: 0
 --- !u!61 &61807199046447796
 BoxCollider2D:
@@ -141,7 +197,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.96}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -152,7 +208,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.95, y: 2.98}
   m_EdgeRadius: 0
 --- !u!95 &95133530535194492
 Animator:
@@ -275,9 +331,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de6e0114bd994114da176a0e689e7499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meta: 
-  destroyAfterCollision: 0
+  meta: ShakeCam
+  exitMeta: 
+  destroyAfterCollision: 1
   reTriger: 0
+  sentToEventManager: 1
   isTriggered: 0
 --- !u!114 &114123987757132160
 MonoBehaviour:
@@ -290,11 +348,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef519169abfc7d48ba9bde09cceb2f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolSpeed: 2
+  patrolSpeed: 1.5
   agroRadius: 3
-  dropSpeed: 6
-  patrolPoints: []
-  trigger: {fileID: 114053069312899248}
+  dropSpeed: 5
+  patrolPoints:
+  - {x: -8, y: -3.5, z: 0}
+  - {x: -4.5, y: -3.5, z: 0}
+  trigger: {fileID: 114932114861364638}
+--- !u!114 &114932114861364638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977894508181968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6e0114bd994114da176a0e689e7499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meta: 
+  exitMeta: 
+  destroyAfterCollision: 0
+  reTriger: 0
+  sentToEventManager: 0
+  isTriggered: 0
 --- !u!212 &212016233230740530
 SpriteRenderer:
   m_ObjectHideFlags: 1

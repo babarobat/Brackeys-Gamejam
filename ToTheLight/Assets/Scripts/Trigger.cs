@@ -6,6 +6,7 @@ using System;
 public class Trigger : MonoBehaviour {
 
     public string meta;
+    public string exitMeta;
     public bool destroyAfterCollision;
     public bool reTriger;
     public bool sentToEventManager;
@@ -26,6 +27,22 @@ public class Trigger : MonoBehaviour {
             if (sentToEventManager)
             {
                 _eventManager.StartEvent(meta);
+            }
+            StartCoroutine(Triggered(reTriger));
+            if (destroyAfterCollision)
+            {
+                Destroy(gameObject, 0.2f);
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        var playerScript = collision.GetComponent<PlayerController>();
+        if (playerScript != null)
+        {
+            if (sentToEventManager)
+            {
+                _eventManager.StartEvent(exitMeta);
             }
             StartCoroutine(Triggered(reTriger));
             if (destroyAfterCollision)

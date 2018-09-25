@@ -5,9 +5,13 @@ using UnityEngine;
 public class EventManager : MonoBehaviour {
 
     private SoundManager _soundManager;
+    private CameraController _cameraController;
+    private DangerEffect _dangerEffect;
 
     private void Start()
     {
+        _cameraController = FindObjectOfType<CameraController>();
+        _dangerEffect = FindObjectOfType<DangerEffect>();
         _soundManager = SoundManager.instance;
         if (_soundManager ==null)
         {
@@ -21,6 +25,18 @@ public class EventManager : MonoBehaviour {
             case "PlaySecondPartOfmainTheme":
                 StartSecondMusicTheme();
                 break;
+            case "ShakeCam":
+                _cameraController.SwitchCamAnimTrigger("ShakeCam");
+                break;
+            case "DangerComes":
+                _dangerEffect.AnimationTriggerSwitch("DangerComes");
+                _cameraController.SwitchCamAnimTrigger("DangerCamShake");
+                break;
+            case "NoDanger":
+                _dangerEffect.AnimationTriggerSwitch("DangerStop");
+                _cameraController.SwitchCamAnimTrigger("NormalCam");
+                break;
+
             default:
                 break;
         }
@@ -30,6 +46,7 @@ public class EventManager : MonoBehaviour {
     {
         _soundManager.PlaySecondPartOfmainTheme();
     }
+    
 
     
 }

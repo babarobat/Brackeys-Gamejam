@@ -103,6 +103,7 @@ public class GameStateManager : MonoBehaviour {
     private void SwitchButtonsOnOff()
     {
         _btnResume.SetActive(!_btnResume.activeSelf);
+        
         _btnRestart.SetActive(!_btnRestart.activeSelf);
         _btnExitToTitle.SetActive(!_btnExitToTitle.activeSelf);
         _btnQuitGame.SetActive(!_btnQuitGame.activeSelf);
